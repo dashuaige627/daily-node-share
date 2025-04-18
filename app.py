@@ -1,35 +1,17 @@
+import os
 from flask import Flask, render_template, request, redirect, url_for
 import json
-import os
 
 app = Flask(__name__)
 
-DATA_FILE = 'data.json'
-PASSWORD = '123456'  # 修改为你自己的密码
-
-# 初始化数据文件
-if not os.path.exists(DATA_FILE):
-    with open(DATA_FILE, 'w') as f:
-        json.dump({"content": "今天还没有分享内容~"}, f)
+# 获取端口环境变量（如果没有，默认为 5000）
+port = int(os.environ.get('PORT', 5000))
 
 @app.route('/')
-def index():
-    with open(DATA_FILE, 'r') as f:
-        data = json.load(f)
-    return render_template('index.html', content=data['content'])
-
-@app.route('/admin', methods=['GET', 'POST'])
-def admin():
-    if request.method == 'POST':
-        pwd = request.form.get('password')
-        content = request.form.get('content')
-        if pwd == PASSWORD:
-            with open(DATA_FILE, 'w') as f:
-                json.dump({"content": content}, f)
-            return redirect(url_for('index'))
-        else:
-            return render_template('admin.html', error="密码错误！")
-    return render_template('admin.html')
+def home():
+    # 示例：在主页上显示简单的内容
+    return 'Hello, Daily Node Share!'
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # 绑定到 0.0.0.0，使用从环境变量读取的端口
+    app.run(host='0.0.0.0', port=port, debug=True)
