@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>后台管理</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; max-width: 700px; margin: auto; }
+    textarea { width: 100%; height: 200px; }
+  </style>
+</head>
+<body>
+  <h1>🔐 管理员后台</h1>
+  {% if error %}
+    <p style="color:red">{{ error }}</p>
+  {% endif %}
+  <form method="post">
+    <label>密码：</label><br>
+    <input type="password" name="password"><br><br>
+    <label>节点内容：</label><br>
+    <textarea name="content"></textarea><br><br>
+    <button type="submit">保存</button>
+  </form>
+  <p><a href="/">返回首页</a></p>
+</body>
+</html>
